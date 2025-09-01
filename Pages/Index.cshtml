@@ -1,0 +1,143 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Synth Space";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+<style>
+    body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    color: #fff;
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+    overflow-x: hidden;
+}
+
+.glitch-wrapper {
+    margin-top: 100px;
+}
+
+.glitch {
+    font-size: 48px;
+    position: relative;
+    color: #fff;
+    animation: flicker 3s infinite alternate;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    color: #f0f;
+    z-index: -1;
+}
+
+.glitch::before {
+    animation: glitchTop 1s infinite linear alternate-reverse;
+    top: -2px;
+}
+
+.glitch::after {
+    animation: glitchBottom 1s infinite linear alternate-reverse;
+    top: 2px;
+    color: #0ff;
+}
+
+@@keyframes glitchTop {
+    0% {
+        clip-path: inset(0 0 90% 0);
+        transform: translate(-2px, -2px);
+    }
+    100% {
+        clip-path: inset(10% 0 80% 0);
+        transform: translate(2px, 2px);
+    }
+}
+
+@@keyframes glitchBottom {
+    0% {
+        clip-path: inset(80% 0 10% 0);
+        transform: translate(2px, 2px);
+    }
+    100% {
+        clip-path: inset(70% 0 20% 0);
+        transform: translate(-2px, -2px);
+    }
+}
+
+@@keyframes flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 1;
+    }
+    20%, 22%, 24%, 55% {
+        opacity: 0.4;
+    }
+}
+
+.video-wrapper {
+    margin: 60px auto 20px;
+    display: flex;
+    justify-content: center;
+}
+
+iframe {
+    border: 3px solid #ff00cc;
+    border-radius: 12px;
+    box-shadow: 0 0 30px #ff00cc;
+}
+
+.tagline {
+    margin-top: 30px;
+    font-size: 14px;
+    color: #ff66ff;
+    text-shadow: 0 0 10px #ff66ff;
+}
+
+</style>
+
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="glitch-wrapper">
+        <h1 id="glitch-title" class="glitch" data-text="Synth Space">Synth Space</h1>
+    </div>
+
+    <section class="video-wrapper">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/lc-4thlaYuA?si=aEvvjhpoV1b5JfkR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </section>
+
+    <p class="tagline"> 80s beats.</p>
+
+    <script>
+        // Add glitch "jitter" effect on the header periodically
+        const glitchTitle = document.getElementById("glitch-title");
+
+        function randomGlitch() {
+            const random = Math.random();
+
+            if (random > 0.7) {
+                glitchTitle.style.transform = `skew(${(Math.random() * 4 - 2)}deg, ${(Math.random() * 4 - 2)}deg)`;
+                glitchTitle.style.filter = `blur(${Math.random() * 2}px)`;
+            } else {
+                glitchTitle.style.transform = "skew(0deg, 0deg)";
+                glitchTitle.style.filter = "blur(0)";
+            }
+
+            setTimeout(randomGlitch, 300);
+        }
+
+        window.onload = randomGlitch;
+
+    </script>
+</body>
+</html>
